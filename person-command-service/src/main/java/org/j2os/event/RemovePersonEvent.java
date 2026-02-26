@@ -1,14 +1,9 @@
 package org.j2os.event;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Builder
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class RemovePersonEvent {
     private String id;
     private String name;
