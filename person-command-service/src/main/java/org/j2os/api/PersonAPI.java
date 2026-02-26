@@ -2,6 +2,7 @@ package org.j2os.api;
 
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.j2os.command.RemovePersonCommand;
 import org.j2os.command.SavePersonCommand;
 import org.j2os.command.UpdatePersonCommand;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,12 @@ public class PersonAPI {
     @GetMapping("/update/{id}/{name}")
     public String update(@PathVariable("id") String id, @PathVariable("name") String name){
         UpdatePersonCommand personCommand = UpdatePersonCommand.builder().id(id).name(name).build();
+        return commandGateway.sendAndWait(personCommand);
+    }
+
+    @GetMapping("/remove/{id}/{name}")
+    public String remove(@PathVariable("id") String id, @PathVariable("name") String name){
+        RemovePersonCommand personCommand = RemovePersonCommand.builder().id(id).name(name).build();
         return commandGateway.sendAndWait(personCommand);
     }
 

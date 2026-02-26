@@ -6,8 +6,10 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.j2os.command.RemovePersonCommand;
 import org.j2os.command.SavePersonCommand;
 import org.j2os.command.UpdatePersonCommand;
+import org.j2os.event.RemovePersonEvent;
 import org.j2os.event.SavePersonEvent;
 import org.j2os.event.UpdatePersonEvent;
 
@@ -38,6 +40,15 @@ public class PersonAggregate {
         AggregateLifecycle.apply(new UpdatePersonEvent(command.getId(), command.getName()));
     }
 
+    @CommandHandler
+    public void handle(RemovePersonCommand command){
+        log.info("    <remove command handler>");
+        log.info("        name: " + command.getName());
+        log.info("        id: " + command.getId());
+        command.setName("remove command handle " + command.getName());
+        AggregateLifecycle.apply(new RemovePersonEvent(command.getId(), command.getName()));
+    }
+
     @EventSourcingHandler
     private void on(SavePersonEvent event){
         log.info("        <save event sourcing handler>");
@@ -53,5 +64,14 @@ public class PersonAggregate {
         log.info("            name: " + event.getName());
         log.info("            id: " + event.getId());
         this.id = event.getId();
+    }
+
+    @EventSourcingHandler
+    private void  on(RemovePersonEvent event){
+        log.info("        <remove event sourcing handler>");
+        log.info("            name: " + event.getName());
+        log.info("            id: " + event.getId());
+        this.id = event.getId();
+
     }
 }

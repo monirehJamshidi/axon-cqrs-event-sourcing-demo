@@ -3,6 +3,7 @@ package org.j2os.service;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
+import org.j2os.event.RemovePersonEvent;
 import org.j2os.event.SavePersonEvent;
 import org.j2os.event.UpdatePersonEvent;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,11 @@ public class PersonService {
                 .forEach(e -> {e.setName(event.getName());});
     }
 
+    @EventHandler
+    public void remove(RemovePersonEvent event){
+        log.info("            <remove service layer>");
+        log.info("                name: " + event.getName());
+        log.info("                id: " + event.getId());
+    }
 
 }
