@@ -7,7 +7,9 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.j2os.command.SavePersonCommand;
+import org.j2os.command.UpdatePersonCommand;
 import org.j2os.event.SavePersonEvent;
+import org.j2os.event.UpdatePersonEvent;
 
 @Aggregate
 @Slf4j
@@ -27,6 +29,15 @@ public class PersonAggregate {
         AggregateLifecycle.apply(new SavePersonEvent(command.getId(), command.getName()));
     }
 
+    @CommandHandler
+    public void handle(UpdatePersonCommand command){
+        log.info("    <update command handler>");
+        log.info("        name: " + command.getName());
+        log.info("        id: " + command.getId());
+        command.setName("update command handle " + command.getName());
+        AggregateLifecycle.apply(new UpdatePersonEvent(command.getId(), command.getName()));
+    }
+
     @EventSourcingHandler
     private void on(SavePersonEvent event){
         log.info("        <save event sourcing handler>");
@@ -34,5 +45,13 @@ public class PersonAggregate {
         log.info("            id: " + event.getId());
         this.id = event.getId();
 
+    }
+
+    @EventSourcingHandler
+    private void on(UpdatePersonEvent event){
+        log.info("        <update event sourcing handler>");
+        log.info("            name: " + event.getName());
+        log.info("            id: " + event.getId());
+        this.id = event.getId();
     }
 }
