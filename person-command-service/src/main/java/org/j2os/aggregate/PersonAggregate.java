@@ -72,6 +72,7 @@ public class PersonAggregate {
         log.info("            name: " + event.getName());
         log.info("            id: " + event.getId());
         this.id = event.getId();
+        AggregateLifecycle.markDeleted();
 
     }
 }
