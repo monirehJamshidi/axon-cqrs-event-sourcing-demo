@@ -27,7 +27,7 @@ public class PersonAggregate {
         log.info("    <save command handler>");
         log.info("        name: " + command.getName());
         log.info("        id: " + command.getId());
-        command.setName("save command handle " + command.getName());
+//        command.setName("save command handle " + command.getName());
         AggregateLifecycle.apply(new SavePersonEvent(command.getId(), command.getName()));
     }
 
@@ -36,7 +36,7 @@ public class PersonAggregate {
         log.info("    <update command handler>");
         log.info("        name: " + command.getName());
         log.info("        id: " + command.getId());
-        command.setName("update command handle " + command.getName());
+//        command.setName("update command handle " + command.getName());
         AggregateLifecycle.apply(new UpdatePersonEvent(command.getId(), command.getName()));
     }
 
@@ -45,7 +45,7 @@ public class PersonAggregate {
         log.info("    <remove command handler>");
         log.info("        name: " + command.getName());
         log.info("        id: " + command.getId());
-        command.setName("remove command handle " + command.getName());
+//        command.setName("remove command handle " + command.getName());
         AggregateLifecycle.apply(new RemovePersonEvent(command.getId(), command.getName()));
     }
 
